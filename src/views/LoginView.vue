@@ -57,6 +57,7 @@ import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 export default {
   name: "loginView",
+  inject: ['messagePlugin'],
   setup() {
     return { v$: useVuelidate() };
   },
@@ -68,6 +69,9 @@ export default {
     email: { email, required, minLength: minLength(3) },
     password: { required, minLength: minLength(6) },
   }),
+  mounted() {
+    this.$message ('test')
+  },
   methods: {
     submitHandler() {
       console.log(this.v$.password);
