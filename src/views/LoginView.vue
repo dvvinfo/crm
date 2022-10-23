@@ -57,7 +57,7 @@ import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 export default {
   name: "loginView",
-  inject: ['messagePlugin'],
+  inject: ["messagePlugin"],
   setup() {
     return { v$: useVuelidate() };
   },
@@ -70,21 +70,25 @@ export default {
     password: { required, minLength: minLength(6) },
   }),
   mounted() {
-    this.$message ('test')
+    this.$message("test");
   },
   methods: {
-    submitHandler() {
+    async submitHandler() {
       console.log(this.v$.password);
       this.v$.$touch();
       if (this.v$.$error) return;
 
       const formData = {
         email: this.email,
-        password: this.password
-      }
-      console.log(formData)
+        password: this.password,
+      };
 
-      this.$router.push("/");
+      try {
+        await this.$store.dispatch("login", formData);
+
+        this.$router.push("/");
+        // eslint-disable-next-line
+      } catch (error) {}
     },
 
     printErrorEmail($name) {
