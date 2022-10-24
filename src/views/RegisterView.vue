@@ -96,7 +96,7 @@ export default {
     agree: { checked: (v) => v },
   }),
   methods: {
-    submitHandler() {
+    async submitHandler() {
       console.log(this.v$.name);
       this.v$.$touch();
       if (this.v$.$error) return;
@@ -106,9 +106,12 @@ export default {
         password: this.password,
         name: this.name,
       };
-      console.log(formData);
+      try {
+        await this.$store.dispatch("register", formData);
 
-      this.$router.push("/");
+        this.$router.push("/");
+         // eslint-disable-next-line
+      } catch (error) {}
     },
 
     printErrorEmail($name) {

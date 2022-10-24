@@ -70,7 +70,7 @@ export default {
     password: { required, minLength: minLength(6) },
   }),
   mounted() {
-    this.$message("test");
+    this.$message("Вы вышли из системы");
   },
   methods: {
     async submitHandler() {
